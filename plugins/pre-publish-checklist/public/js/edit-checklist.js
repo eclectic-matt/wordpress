@@ -3,6 +3,7 @@ var deleteButtons = Array.from( document.querySelectorAll( '.delete-entry-button
 var editButtons = Array.from( document.querySelectorAll( '.edit-entry-button' ) );
 var addButton = document.querySelector( '#add-entry-button' );
 
+var totalItems = php_vars.totalChecklistItems;
 // DELETE
 checklist.addEventListener( 'click', ( evt ) => {
   evt.preventDefault();
@@ -25,7 +26,7 @@ checklist.addEventListener( 'click', ( evt ) => {
 addButton.addEventListener( 'click', ( evt ) => {
   evt.preventDefault();
   var newItem = document.createElement( 'li' );
-  newItem.innerHTML = '<input type="text"><button class="delete-entry-button" value="delete">Delete</button>';
+  newItem.innerHTML = '<input name="checklist-item[]" type="text"><button class="delete-entry-button" value="delete">Delete</button>';
 
   checklist.appendChild( newItem );
   newItem.focus();

@@ -24,7 +24,10 @@ function eclecticapp_init() {
 		'totalChecklistItems' => count($GLOBALS['checklist_entries'])
 	);
 	wp_localize_script( 'eclecticapp-list-js', 'vars', $vars );
-	wp_enqueue_script('eclecticapp-list-js');	
+	wp_enqueue_script('eclecticapp-list-js');
+	
+	wp_register_script( 'eclecticapp-edit-list-js', plugins_url('public/js/edit-checklist.js', __FILE__), [], '', true );
+	wp_enqueue_script('eclecticapp-edit-list-js');
 }
 
 
@@ -48,29 +51,13 @@ function eclecticapp_pre_publish_checklist_add_menu(){
 function eclecticapp_pre_publish_checklist_add_settings_menu(){
 	global $num_ppc_checks;
 	$num_ppc_checks = count($GLOBALS['checklist_entries']);
-	//echo $num_ppc_checks;
-	echo "<h2>Checklist Editor (" . $num_ppc_checks . " checks)</h2>
-			<ul>
-			<form action='" . plugins_url() . "/pre-publish-checklist/pre-publish-checklist-update.php' method='post' id='cl_update'>
-	";
-	for ($i = 1; $i <= $num_ppc_checks; $i++){
-		echo "<li>
-				<input name='" . ($i - 1) . "' value='" . $GLOBALS['checklist_entries'][($i - 1)] . "' type='text'></input>
-		</li>";
-	}
-	echo "</ul>";
 	
-	//echo "<input type='button' onclick='function(){document.getElementById('cl_update').submit()}' value='submit'>";
-	echo "<input type='submit' value='submit'>";
-	echo "
-	</form>
-	";
+	include 'public/partials/edit-checklist.php';
 }
 
 function eclecticapp_pre_publish_checklist_generate($post) {
 	$num_ppc_checks = count($GLOBALS['checklist_entries']);
 	include 'public/partials/post-edit-checklist.php';
 }
-
 
 ?>

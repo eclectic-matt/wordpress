@@ -6,6 +6,6 @@
     <?php endfor; ?>
   </ul>
   <button id="add-entry-button">Add</button>
-  <input type='button' onclick='function(){document.getElementById("cl_update").submit()}' value='submit'>
-<!-- <input type='submit' value='submit'> -->
+  
+ <input type='submit' value='submit'>
 </form>

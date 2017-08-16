@@ -1,5 +1,5 @@
 <h2>Checklist Editor ( <?php echo $num_ppc_checks ?> checks )</h2>
-<form action='" . plugins_url() . "/pre-publish-checklist/pre-publish-checklist-update.php' method='post' id='cl_update'>
+<form action='<?php echo plugins_url('pre-publish-checklist-update.php', __FILE__); ?>' method='post' id='cl_update'>
   <ul id="checklist-list">
     <?php for ($i = 1; $i <= $num_ppc_checks; $i++): ?>
       <li><input type="text" value="<?php echo $GLOBALS['checklist_entries'][$i - 1]; ?>"><button class="delete-entry-button" value="delete">Delete</button></li>

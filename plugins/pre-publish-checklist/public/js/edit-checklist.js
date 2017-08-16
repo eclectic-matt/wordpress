@@ -3,8 +3,6 @@ var deleteButtons = Array.from( document.querySelectorAll( '.delete-entry-button
 var editButtons = Array.from( document.querySelectorAll( '.edit-entry-button' ) );
 var addButton = document.querySelector( '#add-entry-button' );
 
-console.log( checklist );
-
 // DELETE
 checklist.addEventListener( 'click', ( evt ) => {
   evt.preventDefault();

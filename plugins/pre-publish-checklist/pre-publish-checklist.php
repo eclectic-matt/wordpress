@@ -68,7 +68,7 @@ function eclecticapp_checklist_settings_display() {
     }
 	
     $value = get_option('checklist-item', $check_defaults);
-	$num_ppc_checks = count($value);
+    $num_ppc_checks = count($value);
     
 	include 'public/partials/edit-checklist.php';
 }
@@ -76,6 +76,7 @@ function eclecticapp_checklist_settings_display() {
 
 function eclecticapp_pre_publish_checklist_generate($post) {
 	$num_ppc_checks = count(get_option('checklist-item',FALSE));
+	$value = get_option('checklist-item', $check_defaults);
 	include 'public/partials/post-edit-checklist.php';
 }
 

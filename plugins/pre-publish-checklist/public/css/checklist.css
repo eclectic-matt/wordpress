@@ -1,0 +1,18 @@
+#publishing-action{
+  display: none;
+}
+
+.postbox--custom {
+  margin-bottom: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.checklist--pre-publish {
+  margin-top: 1rem;
+  line-height: 2;
+}
+
+.checklist--pre-publish label {
+  display: block;
+}

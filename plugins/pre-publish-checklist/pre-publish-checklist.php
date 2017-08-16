@@ -11,6 +11,23 @@ Author: Matt Tiernan
 Version: 0.1
 Author URI: http://eclecticapp.xyz
 */
+
+// Initialisation function which loads stylesheets and scripts separately.
+add_action( 'admin_init', 'eclecticapp_init' );
+
+function eclecticapp_init() {
+	wp_register_style( 'eclecticapp-list-styles', plugins_url('public/css/checklist.css', __FILE__) );
+	wp_enqueue_style('eclecticapp-list-styles');
+
+	wp_register_script( 'eclecticapp-list-js', plugins_url('public/js/checklist-watch.js', __FILE__) );
+	$vars = array(
+		'totalChecklistItems' => count($GLOBALS['checklist_entries'])
+	);
+	wp_localize_script( 'eclecticapp-list-js', 'vars', $vars );
+	wp_enqueue_script('eclecticapp-list-js');	
+}
+
+
 include_once('pre-publish-checklist-update.php');
 //include_once('pre-publish-checklist-menu.php');
 
@@ -19,7 +36,6 @@ $check_defaults = ["Featured Image Set", "Longtail keyword set", "Yoast SEO - Gr
 if ( !isset( $GLOBALS['checklist_entries'] ) ){
 	$GLOBALS['checklist_entries'] = $check_defaults;
 }
-add_action( 'admin_head', 'eclecticapp_pre_publish_checklist_hide_publish' );
 add_action('post_submitbox_misc_actions', 'eclecticapp_pre_publish_checklist_generate');
 
 //Testing menu page
@@ -51,64 +67,9 @@ function eclecticapp_pre_publish_checklist_add_settings_menu(){
 	";
 }
 
-
-function eclecticapp_pre_publish_checklist_hide_publish(){
-	echo "<style>
-			#publishing-action{
-				display: none;
-			}
-		</style>";
-}
-
-function eclecticapp_pre_publish_checklist_generate($post){
-	
+function eclecticapp_pre_publish_checklist_generate($post) {
 	$num_ppc_checks = count($GLOBALS['checklist_entries']);
-	echo "<script type='text/javascript'>
-			
-			function ppc_check_ready(){
-				var ready = true;
-				var checks = $num_ppc_checks;
-				for (var i = 1; i < checks + 1; i++){
-					var box_id = 'ppc-check-' + i;
-						//console.log('Checking ' + box_id);
-					var this_box = document.getElementById(box_id);
-					if (this_box.checked === false){
-						var ready = false;
-					}
-				}
-				if (ready === true){
-					document.getElementById('publishing-action').style.display = 'block';
-				}else{
-					document.getElementById('publishing-action').style.display = 'none';
-				}
-			}
-		</script>
-	";
-	
-	echo "<form id='pre-publish-checklist-form'>
-		<div class='postbox'>
-		<h2>Pre-Publish Checks</h2>
-		<em style='padding-left:10px'>All checks must be ticked before publishing!</em>
-		<br>
-		<div style='line-height: 2em;'>
-	";
-
-	for ($i = 1; $i <= $num_ppc_checks; $i++){
-		echo "<label style='padding-left: 10px;' class='selectit' for='ppc-check-$i'>
-				<input type='checkbox' id='ppc-check-$i' onchange='ppc_check_ready()'></input>";
-				// Simple version
-				//echo "Check $i ";
-				
-				//Customised text
-				echo $i . ": " . $GLOBALS['checklist_entries'][$i - 1]; //$check_titles[$i - 1];
-		
-		echo "</label>
-			<br>";
-	}
-
-	echo "</div>
-		</div>
-	</form>";
+	include 'public/partials/post-edit-checklist.php';
 }
 
 
